@@ -14,11 +14,7 @@ uint64_t getTicks() {
   return ticks;
 }
 
-int ticks_elapsed() {
-	return ticks;
-}
-
-int seconds_elapsed() {
+int secondsElapsed() {
 	return ticks / 18;
 }
 

@@ -5,8 +5,6 @@
 
 void timeHandler();
 uint64_t getTicks();
-
-int ticks_elapsed();
-int seconds_elapsed();
+int secondsElapsed();
 
 #endif

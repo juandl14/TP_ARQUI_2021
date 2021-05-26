@@ -5,6 +5,7 @@
 #include <naiveConsole.h>
 #include <idtLoader.h>
 #include <timeDriver.h>
+#include <dateDriver.h>
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -101,20 +102,39 @@ int main()
 	ncPrint((char*)sampleDataModuleAddress);
 	ncNewline();
 
+	// Prueba RTC
+	ncPrint("La fecha de hoy es: ");
+	ncPrintHex(getDay());
+	ncPrint("/");
+	ncPrintHex(getMonth());
+	ncPrint("/");
+	ncPrintHex(getYear());
+	ncNewline();
+
+	ncPrint("La hora del dia es: ");
+	ncPrintHex(getHours());
+	ncPrint("horas ");
+	ncPrintHex(getMinutes());
+	ncPrint("minutos ");
+	ncPrintHex(getSeconds());
+	ncPrint("segundos ");
+	ncNewline();
+
 	ncPrint("[Finished]");
 
-	loadIdt();
-	uint8_t change = 0;
-		while(1) {
-		if(!change && seconds_elapsed()% 5 == 0 ) {
-			change = 1;
-			ncPrint("Ticks: ");
-			ncPrintDec(ticks_elapsed());
-		}
-		if(change && seconds_elapsed()% 5 != 0 ) {
-			change = 0;
-		}
-	}
+	// Prueba de timer tick
+	// loadIdt();
+	// uint8_t change = 0;
+	// 	while(1) {
+	// 	if(!change && secondsElapsed()% 5 == 0 ) {
+	// 		change = 1;
+	// 		ncPrint("Ticks: ");
+	// 		ncPrintDec(getTicks());
+	// 	}
+	// 	if(change && secondsElapsed()% 5 != 0 ) {
+	// 		change = 0;
+	// 	}
+	// }
 
 
 

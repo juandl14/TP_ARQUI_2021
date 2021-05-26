@@ -3,6 +3,8 @@
 #include <lib.h>
 #include <moduleLoader.h>
 #include <naiveConsole.h>
+#include <idtLoader.h>
+#include <timeDriver.h>
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -81,7 +83,7 @@ void * initializeKernelBinary()
 }
 
 int main()
-{	
+{
 	ncPrint("[Kernel Main]");
 	ncNewline();
 	ncPrint("  Sample code module at 0x");
@@ -100,5 +102,21 @@ int main()
 	ncNewline();
 
 	ncPrint("[Finished]");
+
+	loadIdt();
+	uint8_t change = 0;
+		while(1) {
+		if(!change && seconds_elapsed()% 5 == 0 ) {
+			change = 1;
+			ncPrint("Ticks: ");
+			ncPrintDec(ticks_elapsed());
+		}
+		if(change && seconds_elapsed()% 5 != 0 ) {
+			change = 0;
+		}
+	}
+
+
+
 	return 0;
 }

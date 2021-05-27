@@ -3,6 +3,9 @@
 #include <lib.h>
 #include <moduleLoader.h>
 #include <naiveConsole.h>
+#include <idtLoader.h>
+#include <timeDriver.h>
+#include <dateDriver.h>
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -81,7 +84,7 @@ void * initializeKernelBinary()
 }
 
 int main()
-{	
+{
 	ncPrint("[Kernel Main]");
 	ncNewline();
 	ncPrint("  Sample code module at 0x");
@@ -99,6 +102,41 @@ int main()
 	ncPrint((char*)sampleDataModuleAddress);
 	ncNewline();
 
+	// Prueba RTC
+	ncPrint("La fecha de hoy es: ");
+	ncPrintHex(getDay());
+	ncPrint("/");
+	ncPrintHex(getMonth());
+	ncPrint("/");
+	ncPrintHex(getYear());
+	ncNewline();
+
+	ncPrint("La hora del dia es: ");
+	ncPrintHex(getHours());
+	ncPrint("horas ");
+	ncPrintHex(getMinutes());
+	ncPrint("minutos ");
+	ncPrintHex(getSeconds());
+	ncPrint("segundos ");
+	ncNewline();
+
 	ncPrint("[Finished]");
+
+	// Prueba de timer tick
+	// loadIdt();
+	// uint8_t change = 0;
+	// 	while(1) {
+	// 	if(!change && secondsElapsed()% 5 == 0 ) {
+	// 		change = 1;
+	// 		ncPrint("Ticks: ");
+	// 		ncPrintDec(getTicks());
+	// 	}
+	// 	if(change && secondsElapsed()% 5 != 0 ) {
+	// 		change = 0;
+	// 	}
+	// }
+
+
+
 	return 0;
 }

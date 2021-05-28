@@ -2,7 +2,7 @@
 #define TIME_DRIVER
 
 #include <stdint.h>
-#include <timeDriver.h>
+#include <timer_driver.h>
 
 static uint64_t ticks = 0;
 

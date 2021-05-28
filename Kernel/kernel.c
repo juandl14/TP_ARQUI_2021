@@ -4,9 +4,10 @@
 #include <moduleLoader.h>
 #include <naiveConsole.h>
 #include <idtLoader.h>
-#include <timeDriver.h>
-#include <dateDriver.h>
+#include <timer_driver.h>
+#include <date_driver.h>
 #include <video_driver.h>
+#include <idtLoader.h>
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -86,23 +87,8 @@ void * initializeKernelBinary()
 
 int main()
 {
-
+	loadIdt();
 	initVideoDriver();
-	// clearDisplay(0x00515151);
-	// drawRectangle(100, 100, 200, 250, 0x00FF00FF);
-	// drawLine(150, 150, 450, 450, 0x00FF0000);
-	// drawLine(350, 0, 350, 500, 0xFFFFFFFF);
-	// drawPixel(500, 501, 0x00FFFFFF);
-	// drawChar(600, 600, 'A', 2, 0xFF55DD, 0, 1);
-	//
-	// uint64_t m[5][5] = {{0x01000000, 0x01000000, 0x00FFFFFF, 0x01000000, 0x01000000},
-	// 									{0x01000000, 0x00FFFFFF, 0x00FFFFFF, 0x00FFFFFF, 0x01000000},
-	// 									{0x00FFFFFF, 0x00FFFFFF, 0x00FF0000, 0x00FFFFFF, 0x00FFFFFF},
-	// 									{0x01000000, 0x00FFFFFF, 0x00FFFFFF, 0x00FFFFFF, 0x01000000},
-	// 									{0x01000000, 0x01000000, 0x00FFFFFF, 0x01000000, 0x01000000}
-	// 									};
-	//
-	// drawMatrix(600, 300, m, 5, 5, 15);
 
 	ncPrint("[Kernel Main]");
 	ncNewline();

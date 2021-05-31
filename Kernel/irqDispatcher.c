@@ -5,10 +5,10 @@
 #include <keyboard_driver.h>
 #include <timer_driver.h>
 #include <regi.h>
-// #include <syscalls.h>
+#include <syscalls.h>
 
 static void int_21h(registerStruct *);
-// static void int_80h(registerStruct *);
+static void int_80h(registerStruct *);
 static void int_20h();
 
 void irqDispatcher(uint64_t irq, uint64_t * registers) {
@@ -17,8 +17,8 @@ void irqDispatcher(uint64_t irq, uint64_t * registers) {
     break;
     case 1: int_21h((registerStruct *)registers);
     break;
-    // case 80: int_80h((registerStruct *)registers);
-    // break;
+    case 80: int_80h((registerStruct *)registers);
+    break;
   }
 }
 
@@ -30,9 +30,9 @@ static void int_21h(registerStruct * registers) {
   keyboardHandler(registers);
 };
 
-// static void int_80h(registerStruct * registers) {
-//   syscallHandler(registers);
-// }
+static void int_80h(registerStruct * registers) {
+  syscallHandler(registers);
+}
 
 
 #endif

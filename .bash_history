@@ -51,3 +51,11 @@ make all
 make clean}
 make all
 exit
+ls
+cd root
+ls
+cd Toolchain
+make all
+cd ..
+make all
+exit

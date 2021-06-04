@@ -3,7 +3,7 @@ GLOBAL readKeyboardSysCall
 GLOBAL isKeyboardEmptySyscall
 GLOBAL drawRectSyscall
 GLOBAL clearDisplaySyscall
-
+GLOBAL setFunctionKeyMethodSyscall
 section .text
 
 
@@ -65,3 +65,14 @@ drawStringSysCall:
     mov rsp, rbp
     pop rbp
     ret
+
+    setFunctionKeyMethodSyscall:
+      push rbp
+      mov rbp, rsp
+
+      mov rax, 13; setFunctionKeyMethod syscall
+      int 80h
+
+      mov rsp, rbp
+      pop rbp
+      ret

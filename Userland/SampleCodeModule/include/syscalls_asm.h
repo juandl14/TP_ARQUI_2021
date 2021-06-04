@@ -8,6 +8,6 @@ void isKeyboardEmptySyscall(uint64_t * target);
 void readKeyboardSysCall(char * buffer, uint64_t size, uint64_t * count);
 void clearDisplaySyscall(uint64_t color);
 void drawRectSyscall(uint64_t xi, uint64_t yi, uint64_t width, uint64_t height, uint64_t color);
-
+void setFunctionKeyMethodSyscall(uint64_t index, void(*)());
 
 #endif

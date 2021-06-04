@@ -17,6 +17,8 @@ static char pressCodes[][2] = {{0, 0}, {0, 0}, {'1', '!'}, {'2', '@'}, {'3', '#'
 static char BUFFER[BUFFER_SIZE] = {0}; //Buffer circular
 static uint64_t startIndex = 0; //Indice del comienzo para el read
 static uint64_t endIndex = 0; //Indice del final para el read
+static void (*functionKeysMethods[10])(void);
+static uint8_t functionKeysMethodsInitialized[10];
 
 void keyboardHandler(registerStruct * registers) {
   uint8_t keyCode = getKeyCode();
@@ -29,6 +31,11 @@ void keyboardHandler(registerStruct * registers) {
     shiftL = 0;
   } else if (keyCode == (SHIFT_R + KEY_RELEASED)) {
     shiftR = 0;
+  } else if ( keyCode >= 59 && keyCode < 69) {
+    int index = keyCode - F1;
+    if (functionKeysMethodsInitialized[index]) {
+      (*functionKeysMethods[index])();
+    }
   }
 
   if (keyCode < KEYS) {
@@ -50,5 +57,19 @@ void bufferEmpty(uint64_t * target) {
 }
 void isMayus(uint64_t * target) {
   *target = (shiftL || shiftR);
+}
+
+void initializeFunctionKeys() {
+  for (uint8_t i = 0; i < 10; i++) {
+    functionKeysMethods[i] = 0;
+    functionKeysMethodsInitialized[i] = 0;
+  }
+}
+
+void setFunctionKeyMethod(uint64_t index, void (*function)()) {
+  if (index > 0 && index <= 10) {
+    functionKeysMethodsInitialized[index-1] = 1;
+    functionKeysMethods[index-1] = function;
+  }
 }
 #endif

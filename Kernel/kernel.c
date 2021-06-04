@@ -89,6 +89,7 @@ int main()
 {
 	loadIdt();
 	initVideoDriver();
+	initializeFunctionKeys();
 
 	ncPrint("[Kernel Main]");
 	ncNewline();

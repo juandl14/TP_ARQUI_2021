@@ -86,6 +86,10 @@ void syscallHandler(registerStruct * registers) {
     // //rdi -> puntero a int para que devuelva el Error
     // readError((uint64_t*)registers->rdi);
     // break;
+    case 13:
+    //rdi -> indice de la tecla de funcion (de 1 (F1) a 10 (F10))
+    //rsi -> puntero a la funcion tipo void foo()
+    setFunctionKeyMethod(registers->rdi, (void (*)())registers->rsi);
   }
 }
 

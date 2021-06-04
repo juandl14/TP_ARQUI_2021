@@ -77,5 +77,9 @@ char getChar() {
   return ch;
 }
 
+void setFunctionKey(int index, void(*func)()) {
+  setFunctionKeyMethodSyscall((uint64_t)index, func);
+}
+
 
 #endif

@@ -15,15 +15,16 @@ void addLine();
 void keyPressedShell(char ch);
 static void clearShellLine(int line);
 static void drawShell0Lines();
+static void drawShell1Lines();
 static void drawBottomLine();
 static void clearScreenLine(uint8_t line);
+static void drawBottomLine0();
+static void drawBottomLine1();
 
 static char lines[2][TOTAL_LINES][MAX_LINE_LENGTH];
-static char lines0[TOTAL_LINES][MAX_LINE_LENGTH];
-static char lines1[TOTAL_LINES][MAX_LINE_LENGTH];
 static int currentLine[] = {0, 0};
 static int lineCursor[] = {0, 0};
-static int activeShell = 0;
+static int activeShell = 1;
 
 void init_shell() {
   for (int i = 0; i < TOTAL_LINES; i++) {
@@ -32,6 +33,7 @@ void init_shell() {
       lines[1][i][j] = 0;
     }
   }
+  setFunctionKey(1,changeActiveShell);
   setConsoleUpdateFunction(updateShell);
   writeToLines("Hola\nLa Mexicana con tremendo flow\n", 37);
   drawShellLines();
@@ -63,9 +65,10 @@ void writeToLines(char * buff, int dim) {
 void changeActiveShell() {
   if (activeShell == 0) {
     activeShell = 1;
-    return;
+  } else {
+    activeShell = 0;
   }
-  activeShell = 0;
+  drawBottomLine();
 }
 
 void updateShell(char * buff, int dim) {
@@ -87,19 +90,18 @@ static void clearShellLine(int line) {
 
 
 void drawShellLines() {
-  if (activeShell == 0) {
-    drawShell0Lines();
-  }
+  drawShell0Lines();
+  drawShell1Lines();
 }
 
 static void drawShell0Lines() {
-  drawRect(0, 0, SCREEN_WIDTH/2, SCREEN_HEIGHT, 0x5151A0);
+  drawRect(0, 0, SCREEN_WIDTH/2, SCREEN_HEIGHT, BUTTERFLY_BUSH);
   int y = SCREEN_HEIGHT;
   int x = 0;
   for (int i = 0; i >= -TOTAL_LINES && i >= -currentLine[0]; i--) {
     y-=BASE_CHAR_HEIGHT;
-    if (i == 0) {
-      drawString(0, y, "> ", 3, WHITE, BUTTERFLY_BUSH, 1, 0);
+    if (i == 0 && activeShell == 0) {
+      drawString(0, y, "> ", 3, 0xF2E124, BUTTERFLY_BUSH, 1, 0);
       x += BASE_CHAR_WIDTH*2;
     } else {
       x = 0;
@@ -109,28 +111,62 @@ static void drawShell0Lines() {
   }
 }
 
+static void drawShell1Lines() {
+  drawRect(SCREEN_WIDTH/2+1, 0, SCREEN_WIDTH/2, SCREEN_HEIGHT, 0x101010);
+  int y = SCREEN_HEIGHT;
+  int x = SCREEN_WIDTH/2+1;
+  for (int i = 0; i >= -TOTAL_LINES && i >= -currentLine[1]; i--) {
+    y-=BASE_CHAR_HEIGHT;
+    if (i == 0 && activeShell == 1) {
+      drawString(x, y, "> ", 3, 0xFF0000, 0x101010, 1, 0);
+      x += BASE_CHAR_WIDTH*2;
+    } else {
+      x = SCREEN_WIDTH/2+1;
+    }
+    if (lines[1][(i+currentLine[1])%(TOTAL_LINES-1)][0] == 0) continue;
+    drawString(x, y, lines[1][(i+currentLine[1])%(TOTAL_LINES-1)], MAX_LINE_LENGTH-1, LIGHT_GRAY, 0x101010, 1, 0);
+  }
+}
+
 static void clearScreenLine(uint8_t line){
   int x = 0;
   int color = BUTTERFLY_BUSH;
   if (activeShell == 1) {
     x = SCREEN_WIDTH/2 + 1;
-    color = BLACK;
+    color = 0x101010;
   }
   drawRect(x,SCREEN_HEIGHT-BASE_CHAR_HEIGHT*(line+1),SCREEN_WIDTH/2,BASE_CHAR_HEIGHT, color);
 }
 
 static void drawBottomLine() {
-  clearScreenLine(0);
+  drawBottomLine0();
+  drawBottomLine1();
+}
+
+static void drawBottomLine0() {
   int x = 0;
   int bkgColor = BUTTERFLY_BUSH;
+  drawRect(x, SCREEN_HEIGHT-BASE_CHAR_HEIGHT, SCREEN_WIDTH/2, BASE_CHAR_HEIGHT, bkgColor);
   int fontColor = WHITE;
-  if (activeShell == 1) {
-    x = SCREEN_WIDTH/2 + 1;
-    bkgColor = BLACK;
-    fontColor = LIGHT_GRAY;
+  int arrowColor = 0xF2E124;
+  if (activeShell == 0) {
+    drawString(x, SCREEN_HEIGHT-BASE_CHAR_HEIGHT, "> ", 3, arrowColor, bkgColor, 1, 0);
+    x += BASE_CHAR_WIDTH*2;
   }
-  drawString(x, SCREEN_HEIGHT-BASE_CHAR_HEIGHT, "> ", 3, fontColor, bkgColor, 1, 0);
-  drawString(x + BASE_CHAR_WIDTH*2, SCREEN_HEIGHT-BASE_CHAR_HEIGHT, lines[activeShell][(currentLine[activeShell])%(TOTAL_LINES-1)], MAX_LINE_LENGTH-1, fontColor, bkgColor, 1, 0);
+  drawString(x, SCREEN_HEIGHT-BASE_CHAR_HEIGHT, lines[0][(currentLine[0])%(TOTAL_LINES-1)], MAX_LINE_LENGTH-1, fontColor, bkgColor, 1, 0);
+}
+
+static void drawBottomLine1() {
+  int x = SCREEN_WIDTH/2 + 1;
+  int bkgColor = 0x101010;
+  drawRect(x, SCREEN_HEIGHT-BASE_CHAR_HEIGHT, SCREEN_WIDTH/2, BASE_CHAR_HEIGHT, bkgColor);
+  int fontColor = LIGHT_GRAY;
+  int arrowColor = 0xFF0000;
+  if (activeShell == 1) {
+    drawString(x, SCREEN_HEIGHT-BASE_CHAR_HEIGHT, "> ", 3, arrowColor, bkgColor, 1, 0);
+    x += BASE_CHAR_WIDTH*2;
+  }
+  drawString(x, SCREEN_HEIGHT-BASE_CHAR_HEIGHT, lines[1][(currentLine[1])%(TOTAL_LINES-1)], MAX_LINE_LENGTH-1, fontColor, bkgColor, 1, 0);
 }
 
 void keyPressedShell(char ch) {

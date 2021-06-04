@@ -15,6 +15,9 @@ char std_in[STD_BUFFER_SIZE] = {0};
 char std_out[STD_BUFFER_SIZE] = {0};
 static char std_io_initialized = 0;
 static char buffered_std_out = 1;
+static int updateConsoleInitialized = 0;
+
+void (*updateConsolePointer)(char *, int);
 
 void stdio_init() {
     if(!std_io_initialized)
@@ -51,9 +54,27 @@ int readKeyboard(char * buffer, int size) {
     uint64_t aux;
     isKeyboardEmptySyscall(&aux);
     if(aux) {
-        readKeyboardSysCall(buffer, (uint8_t) size);
+        //readKeyboardSysCall(buffer, (uint8_t) size);
         return 1;
     }
+}
+
+void setConsoleUpdateFunction(void (*f)(char *, int)) {
+  updateConsolePointer = f;
+  updateConsoleInitialized = 1;
+};
+
+void putChar(char ch) {
+  updateConsolePointer(&ch, 1);
+}
+
+char getChar() {
+  char ch = 0;
+  uint64_t count;
+  while(ch == 0 || count == 0) {
+    readKeyboardSysCall(&ch, 1, &count);
+  }
+  return ch;
 }
 
 

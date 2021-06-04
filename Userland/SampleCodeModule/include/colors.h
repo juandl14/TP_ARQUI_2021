@@ -7,5 +7,6 @@
 #define WHITE 0xFFFFFF
 #define BLACK 0x000000
 #define LIGHT_GRAY 0xCDCDCD
+#define BUTTERFLY_BUSH 0x5151A0
 
 #endif

@@ -5,6 +5,9 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <Shells.h>
+#include <commands.h>
+#include <stdlib.h>
+// #include <time.h>
 
 #define TOTAL_LINES 63
 #define MAX_LINE_LENGTH 65
@@ -20,11 +23,16 @@ static void drawBottomLine();
 static void clearScreenLine(uint8_t line);
 static void drawBottomLine0();
 static void drawBottomLine1();
+static int isCommand(char * name);
 
 static char lines[2][TOTAL_LINES][MAX_LINE_LENGTH];
 static int currentLine[] = {0, 0};
 static int lineCursor[] = {0, 0};
 static int activeShell = 1;
+
+char commandsNames[][MAX_ARG_LEN]={"datetime"/*, "help", "inforeg", "printmem", "divZero", "invalidOPCode", "clear", "echo"*/};
+void  (* run[])(char args[MAX_ARGS][MAX_ARG_LEN]) = {dateTime/*, help, inforeg, printmem, divZero, invalidOPCode, clear, echo*/};
+static int totalCommands = 1; // es 8
 
 void init_shell() {
   for (int i = 0; i < TOTAL_LINES; i++) {
@@ -169,11 +177,47 @@ static void drawBottomLine1() {
   drawString(x, SCREEN_HEIGHT-BASE_CHAR_HEIGHT, lines[1][(currentLine[1])%(TOTAL_LINES-1)], MAX_LINE_LENGTH-1, fontColor, bkgColor, 1, 0);
 }
 
+//ejecutaria los commands
+static void exeCommand(char * line){
+  char commandArgs[10][32] = {{0}}; //Maximo 10 argumentos de 32 caracteres c/u
+  int foundArgs = 0;
+  int index = 0;
+  int nameIndex = 0;
+  while (line[index] != 0 && line[index] != '\n' && foundArgs < 10) {
+    if (line[index] != ' ' && line[index] != '-') {
+      commandArgs[foundArgs][nameIndex++] = line[index];
+    }
+    else if (line[index] == ' ') {
+      foundArgs++;
+      nameIndex = 0;
+    }
+    index++;
+  }
+
+    int i = isCommand(commandArgs[0]);
+    if (i >= 0) {
+      run[i](commandArgs);
+    } else {
+      printf(" - INVALID COMMAND");
+    }
+
+}
+
+//devuelve que comando es si no esta  devuelve -1
+static int isCommand(char * name){
+  for (int i = 0; i < totalCommands; i++) {
+    if (!strcmp(commandsNames[i],name)){
+      return i;
+    }
+  }
+  return -1;
+}
+
 void keyPressedShell(char ch) {
   if (ch) {
-    // if (ch == '\n' && lineCursor > 0) {
-    //   exeCommand(lines[(currentLineNumber)%(TOTAL_LINES-1)]);
-    // }
+    if (ch == '\n' && lineCursor[activeShell] > 0) {
+      exeCommand(lines[activeShell][(currentLine[activeShell])%(TOTAL_LINES-1)]);
+    }
     putChar(ch);
   }
 }

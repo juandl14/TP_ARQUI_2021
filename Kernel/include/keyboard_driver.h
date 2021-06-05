@@ -11,6 +11,7 @@
 #define KEYS 59
 
 #define F1 59
+#define F12 88
 
 #include <regi.h>
 #include <stdint.h>

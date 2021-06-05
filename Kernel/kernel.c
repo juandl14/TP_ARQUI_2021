@@ -7,6 +7,7 @@
 #include <timer_driver.h>
 #include <date_driver.h>
 #include <video_driver.h>
+#include <keyboard_driver.h>
 #include <idtLoader.h>
 
 extern uint8_t text;

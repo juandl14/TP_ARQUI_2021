@@ -4,25 +4,28 @@ GLOBAL isKeyboardEmptySyscall
 GLOBAL drawRectSyscall
 GLOBAL clearDisplaySyscall
 GLOBAL setFunctionKeyMethodSyscall
+GLOBAL getTimeSyscall
+GLOBAL getTicksSyscall
+GLOBAL getRegistersSyscall
 section .text
 
 
 ;TODO describir esta syscall
 drawStringSysCall:
-  push rbp
-  mov rbp, rsp
+    push rbp
+    mov rbp, rsp
 
-  mov rax, 1 ;ID write str
-  mov r10, [rbp+2*8] ;sexto argumento
-  mov r11, [rbp+3*8] ;septimo argumento
+    mov rax, 1 ;ID write str
+    mov r10, [rbp+2*8] ;sexto argumento
+    mov r11, [rbp+3*8] ;septimo argumento
 
-  int 80h
+    int 80h
 
-  mov rsp, rbp
-  pop rbp
-  ret
+    mov rsp, rbp
+    pop rbp
+    ret
 
-  readKeyboardSysCall:
+readKeyboardSysCall:
     push rbp
     mov rbp, rsp
 
@@ -33,7 +36,7 @@ drawStringSysCall:
     pop rbp
     ret
 
-  isKeyboardEmptySyscall:
+isKeyboardEmptySyscall:
     push rbp
     mov rbp, rsp
 
@@ -44,7 +47,7 @@ drawStringSysCall:
     pop rbp
     ret
 
-  clearDisplaySyscall:
+clearDisplaySyscall:
     push rbp
     mov rbp, rsp
 
@@ -55,7 +58,7 @@ drawStringSysCall:
     pop rbp
     ret
 
-  drawRectSyscall:
+drawRectSyscall:
     push rbp
     mov rbp, rsp
 
@@ -66,13 +69,46 @@ drawStringSysCall:
     pop rbp
     ret
 
-    setFunctionKeyMethodSyscall:
-      push rbp
-      mov rbp, rsp
+setFunctionKeyMethodSyscall:
+    push rbp
+    mov rbp, rsp
 
-      mov rax, 13; setFunctionKeyMethod syscall
-      int 80h
+    mov rax, 13; setFunctionKeyMethod syscall
+    int 80h
 
-      mov rsp, rbp
-      pop rbp
-      ret
+    mov rsp, rbp
+    pop rbp
+    ret
+
+getTimeSyscall:
+    push rbp
+    mov rbp, rsp
+
+    mov rax, 8
+    int 80h
+
+    mov rsp, rbp
+    pop rbp
+    ret
+
+getTicksSyscall:
+    push rbp
+    mov rbp, rsp
+
+    mov rax, 7
+    int 80h
+
+    mov rsp, rbp
+    pop rbp
+    ret
+
+getRegistersSyscall:
+    push rbp
+    mov rbp, rsp
+
+    mov rax, 9
+    int 80h
+
+    mov rsp, rbp
+    pop rbp
+    ret

@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdint.h>
-
+#include <stdlib.h>
 #include <syscalls_asm.h>
 #include <stdGraphics.h>
 
@@ -25,27 +25,47 @@ void stdio_init() {
 }
 
 // Arreglar
-int printf(char * fmt, ...) {
-    va_list varList;
-    int i = 0;
-    int j = 0;
-    char printBuffer[PRINTF_BUFFER_SIZE] = {0};
-    // char tmpBuffer[32];
-
-    while(fmt && fmt[i]) {
-        printBuffer[j] = fmt[i];
-        i++;
-        j++;
+void printf(char * fmt, ...) {
+    va_list vl;
+  va_start(vl, fmt);
+  char * auxPtr;
+  char buffer[128] = {0};
+  char tmp[20];
+  int i = 0, j = 0;
+  while (fmt && fmt[i]) {
+    if (fmt[i] == '%') {
+      i++;
+      switch(fmt[i]) {
+        case 'c':
+        buffer[j++] = (char)va_arg( vl, int );
+        break;
+        case 'd':
+        intToString(va_arg( vl, int ), tmp);
+        strcpy(&buffer[j], tmp);
+        j+=strlen(tmp);
+        break;
+        case 's':
+        auxPtr = va_arg(vl, char*);
+        strcpy(&buffer[j],auxPtr);
+        j+=strlen(auxPtr);
+        break;
+        case 'x':
+        intToBase(va_arg( vl, int ),16, tmp);
+        strcpy(&buffer[j], tmp);
+        j+=strlen(tmp);
+        break;
+        case 'X': //long hexa
+        intToBase(va_arg( vl, uint64_t ),16, tmp);
+        strcpy(&buffer[j], tmp);
+        j+=strlen(tmp);
+        break;
+      }
+    } else {
+      buffer[j++] = fmt[i];
     }
-
-    int index;
-    for(index = 0; printBuffer[j] != 0 && index < j && index < PRINTF_BUFFER_SIZE; index++) {
-        std_out[index] = printBuffer[j];
-    }
-    std_out[index] = 0;
-    if(index != 0) {
-        buffered_std_out = 1;
-    }
+    i++;
+  }
+  updateConsolePointer(buffer, j);
 }
 
 int readKeyboard(char * buffer, int size) {
@@ -57,6 +77,7 @@ int readKeyboard(char * buffer, int size) {
         //readKeyboardSysCall(buffer, (uint8_t) size);
         return 1;
     }
+    return 0;
 }
 
 void setConsoleUpdateFunction(void (*f)(char *, int)) {

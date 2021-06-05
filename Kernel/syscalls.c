@@ -7,7 +7,7 @@
 #include <timer_driver.h>
 #include <date_driver.h>
 #include <font.h>
-// #include <IO_driver.h>
+#include <IO_driver.h>
 // #include <exceptions.h>
 
 void writeStr(registerStruct * registers);
@@ -66,10 +66,10 @@ void syscallHandler(registerStruct * registers) {
     getDateInfo((uint8_t) registers->rdi, (uint8_t *) registers->rsi);
     break;
 
-    // case 9: //Obtener los registros
+    case 9: //Obtener los registros
     // //rdi -> puntero a vector de uint64_t para guardar los valores
-    // getRegisters((uint64_t*)registers->rdi);
-    // break;
+    getRegisters((uint64_t*)registers->rdi);
+    break;
     //
     // case 10:
     // //rdi -> direccion de la que se desea leer

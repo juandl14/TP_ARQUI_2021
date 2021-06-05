@@ -35,10 +35,10 @@ void getRegisters(uint64_t * arr) {
   }
 }
 
-void get32bytesFromAddress(uint64_t address, uint64_t * target, uint8_t totalBytes) {
-  uint64_t * pos = (uint64_t *) address;
+void getBytesFromAddress(uint64_t address, uint64_t * target, uint8_t totalBytes) {
+  uint8_t * pos = (uint8_t *) address;
   for (uint8_t i = 0; i < totalBytes; i++) {
-    target[i] = pos[i];
+    target[i] = (uint64_t)pos[i];
   }
 }
 

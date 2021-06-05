@@ -5,5 +5,6 @@
 
 void dateTime(char args[MAX_ARGS][MAX_ARG_LEN]);
 void infoReg(char args[MAX_ARGS][MAX_ARG_LEN]);
+void printmem(char args[MAX_ARGS][MAX_ARG_LEN]);
 
 #endif

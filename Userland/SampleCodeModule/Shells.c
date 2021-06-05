@@ -31,9 +31,9 @@ static int currentLine[] = {0, 0};
 static int lineCursor[] = {0, 0};
 static int activeShell = 1;
 
-char commandsNames[][MAX_ARG_LEN]={"datetime",/* "help", */"inforeg"/*, "printmem", "divZero", "invalidOPCode", "clear", "echo"*/};
-void  (* run[])(char args[MAX_ARGS][MAX_ARG_LEN]) = {dateTime,/* help, */infoReg/*, printmem, divZero, invalidOPCode, clear, echo*/};
-static int totalCommands = 2; // es 8
+char commandsNames[][MAX_ARG_LEN]={"datetime",/* "help", */"inforeg", "printmem"/*, "divZero", "invalidOPCode", "clear", "echo"*/};
+void  (* run[])(char args[MAX_ARGS][MAX_ARG_LEN]) = {dateTime,/* help, */infoReg, printmem,/*  divZero, invalidOPCode, clear, echo*/};
+static int totalCommands = 3; // es 8
 
 void init_shell() {
   for (int i = 0; i < TOTAL_LINES; i++) {
@@ -181,7 +181,7 @@ static void drawBottomLine1() {
 
 //ejecutaria los commands
 static void exeCommand(char * line){
-  char commandArgs[10][32] = {{0}}; //Maximo 10 argumentos de 32 caracteres c/u
+  char commandArgs[5][32] = {{0}}; //Maximo 5 argumentos de 32 caracteres c/u
   int foundArgs = 0;
   int index = 0;
   int nameIndex = 0;

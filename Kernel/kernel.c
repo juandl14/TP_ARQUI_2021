@@ -91,6 +91,10 @@ int main()
 	loadIdt();
 	initVideoDriver();
 	initializeFunctionKeys();
+	uint8_t* pos = 0x12345678;
+	for (int i = 0; i < 32; i++) {
+		*(pos+i)=0xA0 + 3 * i;
+	}
 
 	ncPrint("[Kernel Main]");
 	ncNewline();
@@ -128,20 +132,6 @@ int main()
 	ncNewline();
 
 	ncPrint("[Finished]");
-
-	// Prueba de timer tick
-	// loadIdt();
-	// uint8_t change = 0;
-	// 	while(1) {
-	// 	if(!change && secondsElapsed()% 5 == 0 ) {
-	// 		change = 1;
-	// 		ncPrint("Ticks: ");
-	// 		ncPrintDec(getTicks());
-	// 	}
-	// 	if(change && secondsElapsed()% 5 != 0 ) {
-	// 		change = 0;
-	// 	}
-	// }
 
 
 

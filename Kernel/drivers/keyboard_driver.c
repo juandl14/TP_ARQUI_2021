@@ -4,6 +4,7 @@
 #include <keyboard_driver.h>
 #include <regi.h>
 #include <stdint.h>
+#include <IO_driver.h>
 #define BUFFER_SIZE 64
 
 static uint8_t shiftL = 0, shiftR = 0;
@@ -31,6 +32,8 @@ void keyboardHandler(registerStruct * registers) {
     shiftL = 0;
   } else if (keyCode == (SHIFT_R + KEY_RELEASED)) {
     shiftR = 0;
+  } else if (keyCode == F12) {
+    saveRegisters(registers);
   } else if ( keyCode >= 59 && keyCode < 69) {
     int index = keyCode - F1;
     if (functionKeysMethodsInitialized[index]) {
@@ -72,4 +75,5 @@ void setFunctionKeyMethod(uint64_t index, void (*function)()) {
     functionKeysMethods[index-1] = function;
   }
 }
+
 #endif

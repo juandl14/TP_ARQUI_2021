@@ -148,8 +148,9 @@ static void clearScreenLine(uint8_t line){
 }
 
 static void drawBottomLine() {
-  drawBottomLine0();
-  drawBottomLine1();
+  if (activeShell == 0)
+    drawBottomLine0();
+  else drawBottomLine1();
 }
 
 static void drawBottomLine0() {

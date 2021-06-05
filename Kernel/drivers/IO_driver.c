@@ -31,7 +31,7 @@ void saveRegisters(registerStruct * registers) {
 void getRegisters(uint64_t * arr) {
   uint64_t * regArr = (uint64_t *)&registerSnapshot;
   for (int i = 0; i < TOTAL_REGISTERS; i++) {
-    arr[i] = regArr[i];
+    arr[i] = regArr[TOTAL_REGISTERS - 1 - i];
   }
 }
 

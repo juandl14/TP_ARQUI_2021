@@ -4,5 +4,6 @@
 #define MAX_ARG_LEN 32
 
 void dateTime(char args[MAX_ARGS][MAX_ARG_LEN]);
+void infoReg(char args[MAX_ARGS][MAX_ARG_LEN]);
 
 #endif

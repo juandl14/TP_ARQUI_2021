@@ -7,6 +7,7 @@
 #include <Shells.h>
 #include <commands.h>
 #include <stdlib.h>
+// #include <inforeg.h>
 // #include <time.h>
 
 #define TOTAL_LINES 63
@@ -30,9 +31,9 @@ static int currentLine[] = {0, 0};
 static int lineCursor[] = {0, 0};
 static int activeShell = 1;
 
-char commandsNames[][MAX_ARG_LEN]={"datetime"/*, "help", "inforeg", "printmem", "divZero", "invalidOPCode", "clear", "echo"*/};
-void  (* run[])(char args[MAX_ARGS][MAX_ARG_LEN]) = {dateTime/*, help, inforeg, printmem, divZero, invalidOPCode, clear, echo*/};
-static int totalCommands = 1; // es 8
+char commandsNames[][MAX_ARG_LEN]={"datetime",/* "help", */"inforeg"/*, "printmem", "divZero", "invalidOPCode", "clear", "echo"*/};
+void  (* run[])(char args[MAX_ARGS][MAX_ARG_LEN]) = {dateTime,/* help, */infoReg/*, printmem, divZero, invalidOPCode, clear, echo*/};
+static int totalCommands = 2; // es 8
 
 void init_shell() {
   for (int i = 0; i < TOTAL_LINES; i++) {

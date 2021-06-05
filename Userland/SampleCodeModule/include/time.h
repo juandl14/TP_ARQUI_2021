@@ -7,7 +7,7 @@ int getSeconds();
 int getMinutes();
 int getHours();
 int getDays();
-int getMonths();
+int getMonth();
 int getYear();
 int getTicks();
 

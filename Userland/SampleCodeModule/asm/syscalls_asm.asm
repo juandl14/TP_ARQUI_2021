@@ -6,6 +6,7 @@ GLOBAL clearDisplaySyscall
 GLOBAL setFunctionKeyMethodSyscall
 GLOBAL getTimeSyscall
 GLOBAL getTicksSyscall
+GLOBAL getRegistersSyscall
 section .text
 
 
@@ -95,6 +96,17 @@ getTicksSyscall:
     mov rbp, rsp
 
     mov rax, 7
+    int 80h
+
+    mov rsp, rbp
+    pop rbp
+    ret
+
+getRegistersSyscall:
+    push rbp
+    mov rbp, rsp
+
+    mov rax, 9
     int 80h
 
     mov rsp, rbp

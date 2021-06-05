@@ -1,1 +1,1 @@
-qemu-system-x86_64 -hda Image/x64BareBonesImage.qcow2
+qemu-system-x86_64 -hda Image/x64BareBonesImage.qcow2 -rtc base=localtime

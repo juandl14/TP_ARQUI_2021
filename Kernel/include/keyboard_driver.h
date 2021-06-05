@@ -10,6 +10,9 @@
 #define KEY_RELEASED 128
 #define KEYS 59
 
+#define F1 59
+#define F12 88
+
 #include <regi.h>
 #include <stdint.h>
 
@@ -17,4 +20,6 @@ void keyboardHandler(registerStruct *);
 void readKeyboard(char * buff, uint64_t size, uint64_t * count);
 void bufferEmpty(uint64_t * target);
 void isMayus(uint64_t * target);
+void initializeFunctionKeys();
+void setFunctionKeyMethod(uint64_t index, void (*function)());
 #endif

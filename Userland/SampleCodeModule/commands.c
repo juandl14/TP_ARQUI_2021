@@ -4,7 +4,6 @@
 #include <stdGraphics.h>
 #include <time.h>
 #include <inforeg.h>
-// #include <Shells.h>
 #include <stdint.h>
 #include <syscalls_asm.h>
 // #include <forcedExceptions.h>
@@ -30,4 +29,25 @@ void infoReg(char args[MAX_ARGS][MAX_ARG_LEN]) {
     printf("RAX: %X - RIP: %X\n", registers[4], registers[3]);
     printf("CS: %X - FLAGS: %X\n", registers[2], registers[1]);
     printf("RSP: %X\n", registers[0]);
+}
+
+void printmem(char args[MAX_ARGS][MAX_ARG_LEN]) {
+  putChar('\n');
+  int with0x = 0;
+  if (args[1][0] == '0' && args[1][1] == 'x') {
+    with0x = 2;
+  }
+  uint64_t aux = atohex(&args[1][with0x]);
+  if (aux > 0) {
+    uint64_t bytes[32];
+    getMemSyscall(aux, bytes, 32);
+    for (int i = 0; i < 4; i++) {
+      printf("0x%x: ", aux + i*4);
+      for (int j = 0; j < 8; j++) {
+        printf("%x ", bytes[i*4 + j]);
+      }
+      printf("\n");
+    }
+  }
+
 }

@@ -7,6 +7,7 @@ GLOBAL setFunctionKeyMethodSyscall
 GLOBAL getTimeSyscall
 GLOBAL getTicksSyscall
 GLOBAL getRegistersSyscall
+GLOBAL getMemSyscall
 section .text
 
 
@@ -112,3 +113,14 @@ getRegistersSyscall:
     mov rsp, rbp
     pop rbp
     ret
+
+getMemSyscall:
+  push rbp
+  mov rbp, rsp
+
+  mov rax, 10
+  int 80h
+
+  mov rsp, rbp
+  pop rbp
+  ret

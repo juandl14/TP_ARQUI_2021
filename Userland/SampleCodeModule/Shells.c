@@ -77,7 +77,8 @@ void changeActiveShell() {
   } else {
     activeShell = 0;
   }
-  drawBottomLine();
+  drawBottomLine1();
+  drawBottomLine0();
 }
 
 void updateShell(char * buff, int dim) {

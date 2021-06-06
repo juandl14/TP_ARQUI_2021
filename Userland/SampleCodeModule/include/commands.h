@@ -7,5 +7,6 @@ void dateTime(char args[MAX_ARGS][MAX_ARG_LEN]);
 void infoReg(char args[MAX_ARGS][MAX_ARG_LEN]);
 void help(char args[MAX_ARGS][MAX_ARG_LEN]);
 void clear(char args[MAX_ARGS][MAX_ARG_LEN]);
+void echo(char args[MAX_ARGS][MAX_ARG_LEN]);
 
 #endif

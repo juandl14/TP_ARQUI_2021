@@ -78,3 +78,11 @@ void help(char args[MAX_ARGS][MAX_ARG_LEN]) {
 void clear(char args[MAX_ARGS][MAX_ARG_LEN]){
     clearAll();
 }
+
+void echo(char args[MAX_ARGS][MAX_ARG_LEN]) {
+    putChar('\n');
+    for(int i = 1; args[i][0] && i < MAX_ARGS; i++){
+        printf("%s ", args[i]);
+    }
+    putChar('\n');
+}

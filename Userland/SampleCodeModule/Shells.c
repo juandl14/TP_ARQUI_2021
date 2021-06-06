@@ -31,9 +31,9 @@ static int currentLine[] = {0, 0};
 static int lineCursor[] = {0, 0};
 static int activeShell = 1;
 
-char commandsNames[][MAX_ARG_LEN]={"datetime", "help", "inforeg",/* "printmem", "divzero", "invalidopcode", */"clear"/*, "echo"*/};
-void  (* run[])(char args[MAX_ARGS][MAX_ARG_LEN]) = {dateTime, help, infoReg,/* printmem, divzero, invalidOPCode, */clear/*, echo*/};
-static int totalCommands = 3; // es 8
+char commandsNames[][MAX_ARG_LEN]={"datetime", "help", "inforeg",/* "printmem", "divzero", "invalidopcode", */"clear", "echo"};
+void  (* run[])(char args[MAX_ARGS][MAX_ARG_LEN]) = {dateTime, help, infoReg,/* printmem, divzero, invalidOPCode, */clear, echo};
+static int totalCommands = 5; // es 8
 
 void init_shell() {
     for (int i = 0; i < TOTAL_LINES; i++) {

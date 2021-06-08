@@ -3,7 +3,7 @@
 // includes de prueba
 #include <syscalls_asm.h>
 #include <colors.h>
-#include <Shells.h>
+#include <shells.h>
 
 char * v = (char*)0xB8000 + 79 * 2;
 

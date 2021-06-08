@@ -31,11 +31,11 @@ static int currentLine[] = {0, 0};
 static int lineCursor[] = {0, 0};
 static int activeShell = 1;
 
-char commandsNames[][MAX_ARG_LEN]={"datetime", "help", "inforeg", "printmem",/* "divzero", "invalidopcode", */"clear", "echo"};
-void  (* run[])(char args[MAX_ARGS][MAX_ARG_LEN]) = {dateTime, help, infoReg, printmem,/* divzero, invalidOPCode, */clear, echo};
-static int totalCommands = 5; // es 8
+char commandsNames[][MAX_ARG_LEN]={"datetime", "help", "inforeg", "printmem", "divzero", "invalidopcode", "clear", "echo"};
+void  (* run[])(char args[MAX_ARGS][MAX_ARG_LEN]) = {dateTime, help, infoReg, printmem, divzero, invalidopcode, clear, echo};
+static int totalCommands = 8;
 
-void init_shell() {
+void init_shell(uint64_t errCode) {
     for (int i = 0; i < TOTAL_LINES; i++) {
         for (int j = 0; j < TOTAL_LINES; j++) {
             lines[0][i][j] = 0;
@@ -45,10 +45,22 @@ void init_shell() {
 
     setFunctionKey(1,changeActiveShell);
     setConsoleUpdateFunction(updateShell);
-    printf("Welcome to the Computer Architecture Project 2021 - Q1\n");
-    printf("Created by De Luca, Kim and Lopez Guzman\n");
-    printf("To enter the Help Center, type \"help\" and press ENTER.\n");
-    printf("Which command would you like to run?\n");
+
+    if (errCode < 32) {
+        printf("ERROR CODE %x ", errCode);
+        switch (errCode) {
+            case 0: printf("(division by zero)\n");
+                break;
+            case 1: printf("(invalid operation code)\n");
+                break;
+        }
+    } else {
+        printf("Welcome to the Computer Architecture Project 2021 - Q1\n");
+        printf("Created by De Luca, Kim and Lopez Guzman\n");
+        printf("To enter the Help Center, type \"help\" and press ENTER.\n");
+        printf("Which command would you like to run?\n");
+    }
+    
     drawShellLines();
 
     while(1) {
@@ -181,8 +193,8 @@ static void drawBottomLine1() {
 }
 
 //ejecutaria los commands
-static void exeCommand(char * line){
-  char commandArgs[5][32] = {{0}}; //Maximo 5 argumentos de 32 caracteres c/u
+static void exeCommand(char * line) {
+  char commandArgs[8][32] = {{0}}; //Maximo 8 argumentos de 32 caracteres c/u
   int foundArgs = 0;
   int index = 0;
   int nameIndex = 0;

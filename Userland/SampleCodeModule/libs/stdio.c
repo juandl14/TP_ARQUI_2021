@@ -24,7 +24,19 @@ void stdio_init() {
     std_io_initialized = 1;
 }
 
-// Arreglar
+void scanf(char * buffer) {
+    int aux = 0;
+    int index = 0;
+    while (aux != '\n') {
+        if(aux) {
+            buffer[index++] = aux;
+            putChar(aux);
+            aux = getChar();
+        }
+    }
+    putChar('\n');
+}
+
 void printf(char * fmt, ...) {
     va_list vl;
   va_start(vl, fmt);
@@ -100,6 +112,12 @@ char getChar() {
 
 void setFunctionKey(int index, void(*func)()) {
   setFunctionKeyMethodSyscall((uint64_t)index, func);
+}
+
+uint64_t getError() {
+  uint64_t err = 32;
+  readErrorSyscall(&err);
+  return err;
 }
 
 

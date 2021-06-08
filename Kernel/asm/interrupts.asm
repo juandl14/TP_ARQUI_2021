@@ -5,8 +5,11 @@ GLOBAL picSlaveMask
 GLOBAL _irq00Handler
 GLOBAL _irq01Handler
 GLOBAL _irq80Handler
+GLOBAL _exception00Handler
+GLOBAL _exception06Handler
 
 EXTERN irqDispatcher
+EXTERN exceptionDispatcher
 
 SECTION .text
 
@@ -65,7 +68,13 @@ SECTION .text
 	pushState
 
 	mov rdi, %1 ; pasaje de parametro
+	mov rsi, rsp ; pasaje de registros
 	call exceptionDispatcher
+
+	mov rax, [initialConditions] ; rsp
+	mov [rsp + 18*8], rax
+	mov rax, [initialConditions + 8] ; rip
+	mov [rsp + 15*8], rax
 
 	popState
 	iretq
@@ -105,3 +114,19 @@ _irq01Handler:
 
 _irq80Handler:
     irqHandlerMaster 80
+
+_exception00Handler:
+	exceptionHandler 0
+
+_exception06Handler:
+	exceptionHandler 6
+
+saveInitialConditions:
+	mov rax, rsp
+	mov [initialConditions], rax
+	mov rax, rdi
+	mov [initialConditions + 8], rax
+	ret
+
+SECTION .bss
+initialConditions resb 16 ; rsp: primeros 8 bits - rip: segundos 8 bits

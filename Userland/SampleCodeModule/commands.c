@@ -7,7 +7,7 @@
 #include <shells.h>
 #include <stdint.h>
 #include <syscalls_asm.h>
-// #include <forcedExceptions.h>
+#include <exceptions_asm.h>
 
 static void format(char *str, int value);
 
@@ -106,4 +106,12 @@ void echo(char args[MAX_ARGS][MAX_ARG_LEN]) {
         printf("%s ", args[i]);
     }
     putChar('\n');
+}
+
+void divzero(char args[MAX_ARGS][MAX_ARG_LEN]) {
+    _divzero();
+}
+
+void invalidopcode(char args[MAX_ARGS][MAX_ARG_LEN]) {
+    _invalidopcode();
 }

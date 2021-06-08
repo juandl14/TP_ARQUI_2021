@@ -71,11 +71,12 @@ void syscallHandler(registerStruct * registers) {
     getRegisters((uint64_t*)registers->rdi);
     break;
     //
-    // case 10:
-    // //rdi -> direccion de la que se desea leer
-    // //rsi -> direccion del buffer para guardar
-    // get32bytesFromAddress(registers->rdi, (uint64_t*)registers->rsi, 1);
-    // break;
+    case 10:
+    //rdi -> direccion de la que se desea leer
+    //rsi -> direccion del buffer para guardar
+    //rdx -> totalBytes
+    getBytesFromAddress(registers->rdi, (uint64_t*)registers->rsi, (uint8_t)registers->rdx);
+    break;
 
     case 11:
     //rdi -> puntero a int para devolver si hay algo

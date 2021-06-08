@@ -12,5 +12,5 @@ void setFunctionKeyMethodSyscall(uint64_t index, void(*)());
 void getTimeSyscall(uint8_t mode, uint8_t *target);
 void getTicksSyscall(uint64_t *ticks);
 void getRegistersSyscall(uint64_t * registers);
-
+void getMemSyscall(uint64_t, uint64_t*, uint8_t);
 #endif

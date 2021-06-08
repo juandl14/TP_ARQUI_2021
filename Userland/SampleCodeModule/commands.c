@@ -54,6 +54,27 @@ void infoReg(char args[MAX_ARGS][MAX_ARG_LEN]) {
     printf("RSP: %X\n", registers[0]);
 }
 
+void printmem(char args[MAX_ARGS][MAX_ARG_LEN]) {
+  putChar('\n');
+  int with0x = 0;
+  if (args[1][0] == '0' && args[1][1] == 'x') {
+    with0x = 2;
+  }
+  uint64_t aux = atohex(&args[1][with0x]);
+  if (aux > 0) {
+    uint64_t bytes[32];
+    getMemSyscall(aux, bytes, 32);
+    for (int i = 0; i < 4; i++) {
+      printf("0x%x: ", aux + i*4);
+      for (int j = 0; j < 8; j++) {
+        printf("%x ", bytes[i*4 + j]);
+      }
+      printf("\n");
+    }
+  }
+
+}
+
 void help(char args[MAX_ARGS][MAX_ARG_LEN]) {
     putChar('\n');
     printf("This is the Help Center\n");

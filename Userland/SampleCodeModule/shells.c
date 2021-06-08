@@ -4,7 +4,7 @@
 #include <colors.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <Shells.h>
+#include <shells.h>
 #include <commands.h>
 #include <stdlib.h>
 // #include <inforeg.h>
@@ -32,7 +32,7 @@ static int lineCursor[] = {0, 0};
 static int activeShell = 1;
 
 char commandsNames[][MAX_ARG_LEN]={"datetime", "help", "inforeg", "printmem",/* "divzero", "invalidopcode", */"clear", "echo"};
-void  (* run[])(char args[MAX_ARGS][MAX_ARG_LEN]) = {dateTime, help, infoReg,/* printmem, divzero, invalidOPCode, */clear, echo};
+void  (* run[])(char args[MAX_ARGS][MAX_ARG_LEN]) = {dateTime, help, infoReg, printmem,/* divzero, invalidOPCode, */clear, echo};
 static int totalCommands = 5; // es 8
 
 void init_shell() {

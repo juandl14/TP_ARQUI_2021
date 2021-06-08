@@ -13,7 +13,6 @@ OBJECTS_LOADER=$(SOURCES_LOADER:.c=.o)
 
 
 all: $(MODULE)
-	# echo "AAAA"
 
 $(MODULE): $(OBJECTS) $(OBJECTS_C) $(OBJECTS_ASM) $(OBJECTS_LOADER)
 	$(LD) $(LDFLAGS) -T ./sampleCodeModule.ld $(OBJECTS_LOADER) $(OBJECTS_ASM) $(OBJECTS_C) $(OBJECTS) -o ../$(MODULE)
@@ -25,7 +24,7 @@ $(MODULE): $(OBJECTS) $(OBJECTS_C) $(OBJECTS_ASM) $(OBJECTS_LOADER)
 	$(ASM) $(ASMFLAGS) $< -o $@
 
 clean:
-	rm -rf */*.o
+	rm -rf *.o */*.o
 
 .PHONY: all clean print
 

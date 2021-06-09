@@ -7,6 +7,7 @@
 #include <shells.h>
 #include <commands.h>
 #include <stdlib.h>
+#include <syscalls_asm.h>
 // #include <inforeg.h>
 // #include <time.h>
 
@@ -47,20 +48,33 @@ void init_shell(uint64_t errCode) {
     setConsoleUpdateFunction(updateShell);
 
     if (errCode < 32) {
+        uint64_t registers[19];
+        getRegistersSyscall(registers);
         printf("ERROR CODE %x ", errCode);
         switch (errCode) {
             case 0: printf("(division by zero)\n");
                 break;
-            case 1: printf("(invalid operation code)\n");
+            case 6: printf("(invalid operation code)\n");
                 break;
         }
+        printf("REGISTERS STATUS:\n");
+        printf("R15: %X - R14: %X\n", registers[18], registers[17]);
+	    printf("R13: %X - R12: %X\n", registers[16], registers[15]);
+        printf("R11: %X - R10: %X\n", registers[14], registers[13]);
+        printf("R9: %X - R8: %X\n", registers[12], registers[11]);
+        printf("RSI: %X - RDI: %X\n", registers[10], registers[9]);
+        printf("RBP: %X - RDX: %X\n", registers[8], registers[7]);
+        printf("RCX: %X - RBX: %X\n", registers[6], registers[5]);
+        printf("RAX: %X - RIP: %X\n", registers[4], registers[3]);
+        printf("CS: %X - FLAGS: %X\n", registers[2], registers[1]);
+        printf("RSP: %X\n", registers[0]);
     } else {
         printf("Welcome to the Computer Architecture Project 2021 - Q1\n");
         printf("Created by De Luca, Kim and Lopez Guzman\n");
         printf("To enter the Help Center, type \"help\" and press ENTER.\n");
         printf("Which command would you like to run?\n");
     }
-    
+
     drawShellLines();
 
     while(1) {

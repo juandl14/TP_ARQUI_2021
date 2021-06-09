@@ -7,6 +7,7 @@ GLOBAL _irq01Handler
 GLOBAL _irq80Handler
 GLOBAL _exception00Handler
 GLOBAL _exception06Handler
+GLOBAL saveInitialConditions
 
 EXTERN irqDispatcher
 EXTERN exceptionDispatcher
@@ -52,8 +53,9 @@ SECTION .text
 %macro irqHandlerMaster 1
 	pushState
 
-	mov rdi, %1 ; pasaje de parametro
 	mov rsi, rsp ; pasaje del "vector" de registros
+	mov rdi, %1 ; pasaje de parametro
+
 	call irqDispatcher
 
 	; signal pic EOI (End of Interrupt)

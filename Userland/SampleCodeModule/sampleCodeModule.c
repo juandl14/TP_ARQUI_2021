@@ -4,6 +4,7 @@
 #include <syscalls_asm.h>
 #include <colors.h>
 #include <shells.h>
+#include <stdint.h>
 
 char * v = (char*)0xB8000 + 79 * 2;
 

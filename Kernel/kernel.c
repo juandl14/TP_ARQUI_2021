@@ -3,6 +3,12 @@
 #include <lib.h>
 #include <moduleLoader.h>
 #include <naiveConsole.h>
+#include <idtLoader.h>
+#include <timer_driver.h>
+#include <date_driver.h>
+#include <video_driver.h>
+#include <keyboard_driver.h>
+#include <idtLoader.h>
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -81,13 +87,22 @@ void * initializeKernelBinary()
 }
 
 int main()
-{	
+{
+	loadIdt();
+	initVideoDriver();
+	initializeFunctionKeys();
+	uint8_t* pos = 0x12345678;
+	for (int i = 0; i < 32; i++) {
+		*(pos+i)=0xA0 + 3 * i;
+	}
+
 	ncPrint("[Kernel Main]");
 	ncNewline();
 	ncPrint("  Sample code module at 0x");
 	ncPrintHex((uint64_t)sampleCodeModuleAddress);
 	ncNewline();
 	ncPrint("  Calling the sample code module returned: ");
+	saveInitialConditions(sampleCodeModuleAddress);
 	ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
 	ncNewline();
 	ncNewline();
@@ -99,6 +114,27 @@ int main()
 	ncPrint((char*)sampleDataModuleAddress);
 	ncNewline();
 
+	// Prueba RTC
+	ncPrint("La fecha de hoy es: ");
+	ncPrintHex(getDay());
+	ncPrint("/");
+	ncPrintHex(getMonth());
+	ncPrint("/");
+	ncPrintHex(getYear());
+	ncNewline();
+
+	ncPrint("La hora del dia es: ");
+	ncPrintHex(getHours());
+	ncPrint("horas ");
+	ncPrintHex(getMinutes());
+	ncPrint("minutos ");
+	ncPrintHex(getSeconds());
+	ncPrint("segundos ");
+	ncNewline();
+
 	ncPrint("[Finished]");
+
+
+
 	return 0;
 }

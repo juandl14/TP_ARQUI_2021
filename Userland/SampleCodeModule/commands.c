@@ -82,12 +82,12 @@ void help(char args[MAX_ARGS][MAX_ARG_LEN]) {
     printf("\t* F1 - switch between shells\n");
     printf("\t* F12 - saves the values of the registers\n");
     printf("\tCommands:\n");
-    printf("\t* datetime - displays the current date and time of the SO\n");
+    printf("\t* datetime - displays the current date and time of the OS\n");
     printf("\t* inforeg - displays the values of each register\n");
-    printf("\t* printmem [ARGUMENT] - displays 32 bytes of memory,\n");
-    printf("\tstarting from the address given in the argument\n");
     printf("\t(F12 must have been pressed before this command is used for\n");
     printf("\tit to work correctly)\n");
+    printf("\t* printmem [ARGUMENT] - displays 32 bytes of memory,\n");
+    printf("\tstarting from the address given in the argument\n");
     printf("\t* clear - clears the current shell\n");
     printf("\t* echo [ARGUMENT] - prints the given argument\n");
     printf("\t* divzero - forces a division by zero and shows the\n");

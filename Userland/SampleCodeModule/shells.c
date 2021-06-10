@@ -8,8 +8,6 @@
 #include <commands.h>
 #include <stdlib.h>
 #include <syscalls_asm.h>
-// #include <inforeg.h>
-// #include <time.h>
 
 #define TOTAL_LINES 63
 #define MAX_LINE_LENGTH 65

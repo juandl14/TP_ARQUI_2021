@@ -92,6 +92,12 @@ int main()
 	initVideoDriver();
 	initializeFunctionKeys();
 
+	//Test para printmem
+	// uint8_t * pos = 0x12345678;
+	// for (uint8_t i = 0; i < 32; i++) {
+	// 	*(pos+i) = 0x10 + i;
+	// }
+
 	ncPrint("[Kernel Main]");
 	ncNewline();
 	ncPrint("  Sample code module at 0x");

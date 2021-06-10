@@ -67,7 +67,7 @@ void printmem(char args[MAX_ARGS][MAX_ARG_LEN]) {
     for (int i = 0; i < 4; i++) {
       printf("0x%x: ", aux + i*4);
       for (int j = 0; j < 8; j++) {
-        printf("%x ", bytes[i*4 + j]);
+        printf("%x ", bytes[i*8 + j]);
       }
       printf("\n");
     }

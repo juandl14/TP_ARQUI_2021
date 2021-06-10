@@ -6,7 +6,6 @@
 #include <timer_driver.h>
 #include <regi.h>
 #include <syscalls.h>
-#include <interrupts.h>
 
 static void int_21h(registerStruct *);
 static void int_80h(registerStruct *);
@@ -14,11 +13,11 @@ static void int_20h();
 
 void irqDispatcher(uint64_t irq, uint64_t * registers) {
   switch (irq) {
-    case 0: int_20h(); _sendEOI();
+    case 0: int_20h();
     break;
-    case 1: int_21h((registerStruct *)registers); _sendEOI();
+    case 1: int_21h((registerStruct *)registers);
     break;
-    case 80: _sti(); _sendEOI(); int_80h((registerStruct *)registers); //Aca mando el EOI antes por si tengo una interrupcion de hardware en el medio;
+    case 80: int_80h((registerStruct *)registers);
     break;
   }
 }

@@ -104,7 +104,9 @@ void putChar(char ch) {
 char getChar() {
   char ch = 0;
   uint64_t count;
-  readKeyboardSysCall(&ch, 1, &count);
+  while(ch == 0 || count == 0) {
+    readKeyboardSysCall(&ch, 1, &count);
+  }
   return ch;
 }
 

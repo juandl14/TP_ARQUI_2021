@@ -98,3 +98,4 @@ Las funciones implementadas son:
 * `int getDays()` devuelve el día de la fecha actual
 * `int getMonth()` devuelve el mes de la fecha actual
 * `int getYear()` devuelve el año de la fecha actual
+* `int getTicks()` devuelve la cantidad total de ticks del Timer Tick

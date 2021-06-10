@@ -91,10 +91,6 @@ int main()
 	loadIdt();
 	initVideoDriver();
 	initializeFunctionKeys();
-	uint8_t* pos = 0x12345678;
-	for (int i = 0; i < 32; i++) {
-		*(pos+i)=0xA0 + 3 * i;
-	}
 
 	ncPrint("[Kernel Main]");
 	ncNewline();
@@ -112,24 +108,6 @@ int main()
 	ncNewline();
 	ncPrint("  Sample data module contents: ");
 	ncPrint((char*)sampleDataModuleAddress);
-	ncNewline();
-
-	// Prueba RTC
-	ncPrint("La fecha de hoy es: ");
-	ncPrintHex(getDay());
-	ncPrint("/");
-	ncPrintHex(getMonth());
-	ncPrint("/");
-	ncPrintHex(getYear());
-	ncNewline();
-
-	ncPrint("La hora del dia es: ");
-	ncPrintHex(getHours());
-	ncPrint("horas ");
-	ncPrintHex(getMinutes());
-	ncPrint("minutos ");
-	ncPrintHex(getSeconds());
-	ncPrint("segundos ");
 	ncNewline();
 
 	ncPrint("[Finished]");

@@ -3,7 +3,6 @@
 #include <stdlib.h>
 
 int atoi(char * str);
-// double strToDouble(char * str);
 int intToString(unsigned long long num, char * buffer);
 int strlen(char *str);
 int strcmp(char * str1, char * str2);

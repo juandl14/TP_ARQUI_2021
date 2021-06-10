@@ -13,7 +13,7 @@ GLOBAL readErrorSyscall
 section .text
 
 
-;TODO describir esta syscall
+
 drawStringSysCall:
     push rbp
     mov rbp, rsp

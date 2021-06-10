@@ -3,8 +3,6 @@
 #include <syscalls_asm.h>
 #include <stdint.h>
 
-//NOTA: Hay un bug en el case en el que x = 0, no se porque no lo dibuja
-//TODO: Arreglar eso
 
 void drawString(int x, int y, char * buffer, int dim, uint64_t fontColor, uint64_t backgroundColor, int fontSize, int alphaBackground) {
   drawStringSysCall(buffer, (uint64_t)dim, (uint64_t)x, (uint64_t)y, fontColor, backgroundColor, (uint64_t)fontSize, (uint64_t)alphaBackground);

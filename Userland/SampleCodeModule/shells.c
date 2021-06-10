@@ -89,7 +89,7 @@ void writeToLines(char * buff, int dim) {
             }
         } else if (buff[i] == '\b' && lineCursor[activeShell] > 0) {
             lines[activeShell][currentLine[activeShell] % (TOTAL_LINES-1)][lineCursor[activeShell]-1] = lines[activeShell][currentLine[activeShell] % (TOTAL_LINES-1)][lineCursor[activeShell]];
-            lineCursor[activeShell]-=lineCursor[activeShell]==0?0:1; //TODO ver si se puede mejorar
+            lineCursor[activeShell]-=lineCursor[activeShell]==0?0:1;
         } else {
             lines[activeShell][currentLine[activeShell] % (TOTAL_LINES-1)][lineCursor[activeShell]] = buff[i];
             lineCursor[activeShell]++;

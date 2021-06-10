@@ -8,6 +8,8 @@ GLOBAL getTimeSyscall
 GLOBAL getTicksSyscall
 GLOBAL getRegistersSyscall
 GLOBAL getMemSyscall
+GLOBAL readErrorSyscall
+
 section .text
 
 
@@ -115,12 +117,23 @@ getRegistersSyscall:
     ret
 
 getMemSyscall:
-  push rbp
-  mov rbp, rsp
+    push rbp
+    mov rbp, rsp
 
-  mov rax, 10
-  int 80h
+    mov rax, 10
+    int 80h
 
-  mov rsp, rbp
-  pop rbp
-  ret
+    mov rsp, rbp
+    pop rbp
+    ret
+
+readErrorSyscall:
+    push rbp
+    mov rbp, rsp
+
+    mov rax, 12 ;ID readError
+    int 80h
+
+    mov rsp, rbp
+    pop rbp
+    ret

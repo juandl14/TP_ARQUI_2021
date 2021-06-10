@@ -3,5 +3,6 @@
 
 void drawShellLines();
 void init_shell();
+void clearAll();
 
 #endif

@@ -8,7 +8,7 @@
 #include <date_driver.h>
 #include <font.h>
 #include <IO_driver.h>
-// #include <exceptions.h>
+#include <exceptions.h>
 
 void writeStr(registerStruct * registers);
 void getDateInfo(uint8_t mode, uint8_t * target);
@@ -67,10 +67,10 @@ void syscallHandler(registerStruct * registers) {
     break;
 
     case 9: //Obtener los registros
-    // //rdi -> puntero a vector de uint64_t para guardar los valores
+    //rdi -> puntero a vector de uint64_t para guardar los valores
     getRegisters((uint64_t*)registers->rdi);
     break;
-    //
+
     case 10:
     //rdi -> direccion de la que se desea leer
     //rsi -> direccion del buffer para guardar
@@ -83,10 +83,11 @@ void syscallHandler(registerStruct * registers) {
     bufferEmpty((uint64_t *) registers->rdi);
     break;
 
-    // case 12: //readError
-    // //rdi -> puntero a int para que devuelva el Error
-    // readError((uint64_t*)registers->rdi);
-    // break;
+    case 12: //readError
+    //rdi -> puntero a int para que devuelva el Error
+    readError((uint64_t*)registers->rdi);
+    break;
+
     case 13:
     //rdi -> indice de la tecla de funcion (de 1 (F1) a 10 (F10))
     //rsi -> puntero a la funcion tipo void foo()

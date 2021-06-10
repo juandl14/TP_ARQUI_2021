@@ -40,3 +40,23 @@
 * F12 - Sirve para guardar el estado de los registros.
 
 Además, un progrmador podría setear la funcionalidad que quiera para las teclas F1 a F10 mediante punteros a función.
+
+#### Syscalls
+Las syscalls a disposición del usuario son las siguientes: <br>
+
+| %rax | Name                 | %rdi                 | %rsi             |      %rdx        |      %rcx       |      %r8       |
+|------|----------------------|----------------------|------------------|------------------|-----------------|----------------|
+|  0   | readKeyboard         | char * buffer        | uint64_t size    | uint64_t * count |        -        |       -        |
+|  1   | drawString           | char * buffer        | uint64_t size    | uint64_t x       | uint64_t y      |       -        |
+|  2   | clearDisplay         | uint64_t color       |        -         |        -         |        -        |       -        |
+|  3   | drawLine             |         -            |        -         |        -         |        -        |       -        |
+|  4   | drawPixel            |         -            |        -         |        -         |        -        |       -        |
+|  5   | drawRect             | uint64_t xi          | uint64_t yi      | uint64_t width   | uint64_t height | uint64_t color |
+|  6   | drawMatrix           |         -            |        -         |        -         |        -        |       -        |
+|  7   | getTicks             | uint64_t * ticks     |        -         |        -         |        -        |       -        |
+|  8   | getTime              | uint8_t mode         | uint8_t * target |        -         |        -        |       -        |
+|  9   | getRegisters         | uint64_t * registers |        -         |        -         |        -        |       -        |
+|  10  | getMem               | uint64_t address     | uint64_t * bytes | uint8_t size     |        -        |       -        |
+|  11  | isKeyboardEmpty      | uint64_t * target    |        -         |        -         |        -        |       -        |
+|  12  | readError            | uint64_t * err       |        -         |        -         |        -        |       -        |
+|  13  | setFunctionKeyMethod | uint64_t index       | void(*)()        |        -         |        -        |       -        |

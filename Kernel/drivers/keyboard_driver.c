@@ -4,6 +4,7 @@
 #include <keyboard_driver.h>
 #include <regi.h>
 #include <stdint.h>
+#include <interrupts.h>
 #include <IO_driver.h>
 #define BUFFER_SIZE 64
 
@@ -49,7 +50,10 @@ void keyboardHandler(registerStruct * registers) {
 
 void readKeyboard(char * buff, uint64_t size, uint64_t * count) {
   int i = 0;
-	for(i = 0; i<(endIndex-startIndex) && i<size; i++){
+  while (endIndex<=startIndex) {
+    _hlt();
+  }
+	for(i = 0; (endIndex>startIndex) && i<size; i++){
 		buff[i] = BUFFER[(startIndex++)%BUFFER_SIZE];
 	}
 	*count = i;

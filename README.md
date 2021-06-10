@@ -44,19 +44,19 @@ Además, un progrmador podría setear la funcionalidad que quiera para las tecla
 #### Syscalls
 Las syscalls a disposición del usuario son las siguientes: <br>
 
-| %rax | Name                 | %rdi                 | %rsi             |      %rdx        |      %rcx       |      %r8       |
-|------|----------------------|----------------------|------------------|------------------|-----------------|----------------|
-|  0   | readKeyboard         | char * buffer        | uint64_t size    | uint64_t * count |        -        |       -        |
-|  1   | drawString           | char * buffer        | uint64_t size    | uint64_t x       | uint64_t y      |       -        |
-|  2   | clearDisplay         | uint64_t color       |        -         |        -         |        -        |       -        |
-|  3   | drawLine             |         -            |        -         |        -         |        -        |       -        |
-|  4   | drawPixel            |         -            |        -         |        -         |        -        |       -        |
-|  5   | drawRect             | uint64_t xi          | uint64_t yi      | uint64_t width   | uint64_t height | uint64_t color |
-|  6   | drawMatrix           |         -            |        -         |        -         |        -        |       -        |
-|  7   | getTicks             | uint64_t * ticks     |        -         |        -         |        -        |       -        |
-|  8   | getTime              | uint8_t mode         | uint8_t * target |        -         |        -        |       -        |
-|  9   | getRegisters         | uint64_t * registers |        -         |        -         |        -        |       -        |
-|  10  | getMem               | uint64_t address     | uint64_t * bytes | uint8_t size     |        -        |       -        |
-|  11  | isKeyboardEmpty      | uint64_t * target    |        -         |        -         |        -        |       -        |
-|  12  | readError            | uint64_t * err       |        -         |        -         |        -        |       -        |
-|  13  | setFunctionKeyMethod | uint64_t index       | void(*)()        |        -         |        -        |       -        |
+| %rax | Name                 | %rdi                 | %rsi             |      %rdx        |      %rcx       |      %r8           | %r9 | %r10 | %r11 |
+|------|----------------------|----------------------|------------------|------------------|-----------------|--------------------|-----|------|------|
+|  0   | readKeyboard         | char * buffer        | uint64_t size    | uint64_t * count |        -        |       -            |  -  |  -   |  -   |
+|  1   | drawString           | char * buffer        | uint64_t size    | uint64_t x        | uint64_t y      | uint64_t fontColor | uint64_t bkgColor | uint64_t fontSize | uint64_t alphaBkg |
+|  2   | clearDisplay         | uint64_t color       |        -         |        -          |        -        |       -            |  -  |  -   |  -   |
+|  3   | drawLine             | uint64_t x           | uint64_t y       | uint64_t xEnd     | uint64_t yEnd   | uint64_t color     |  -  |  -   |  -   |
+|  4   | drawPixel            | uint64_t x           | uint64_t y       | uint64_t color    |        -        |       -            |  -  |  -   |  -   |
+|  5   | drawRect             | uint64_t xi          | uint64_t yi      | uint64_t width    | uint64_t height | uint64_t color     |
+|  6   | drawMatrix           | uint64_t x           | uint64_t y       | uint64_t * matrix | uint64_t width  | uint64_t height    | uint64_t size |  -  |  -   |  -   |
+|  7   | getTicks             | uint64_t * ticks     |        -         |        -          |        -        |       -            |-|-|-|
+|  8   | getTime              | uint8_t mode         | uint8_t * target |        -          |        -        |       -            |-|-|-|
+|  9   | getRegisters         | uint64_t * registers |        -         |        -          |        -        |       -            |-|-|-|
+|  10  | getMem               | uint64_t address     | uint64_t * bytes | uint8_t size      |        -        |       -            |-|-|-|
+|  11  | isKeyboardEmpty      | uint64_t * target    |        -         |        -          |        -        |       -            |-|-|-|
+|  12  | readError            | uint64_t * err       |        -         |        -          |        -        |       -            |-|-|-|
+|  13  | setFunctionKeyMethod | uint64_t index       | void(*)()        |        -          |        -        |       -            |-|-|-|

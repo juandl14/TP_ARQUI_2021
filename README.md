@@ -60,3 +60,41 @@ Las syscalls a disposición del usuario son las siguientes: <br>
 | 11   | isKeyboardEmpty      | uint64_t * target    | -                | -                 | -               | -                  | -                 | -                 | -                 |
 | 12   | readError            | uint64_t * err       | -                | -                 | -               | -                  | -                 | -                 | -                 |
 | 13   | setFunctionKeyMethod | uint64_t index       | void(*)()        | -                 | -               | -                  | -                 | -                 | -                 |
+
+#### stdio
+Las funciones implementadas son:
+* `void setConsoleUpdateFunction(void (*f)(char *, int))` sirve como endPoint para la librería para imprimir strings
+* `char getChar()` devuelve el siguiente char del buffer del teclado
+* `void scanf(char * buffer)` escribe en el buffer los char del buffer del teclado hasta que aparezca un '\n'.
+* `void printf(char * fmt, ...)` imprime el string formateado
+* `void setFunctionKey(int index, void(*func)())` setea en una tecla especial (F1-F10) la funcionalidad deseada
+* `void putChar(char ch)` imprime un char
+* `uint64_t getError()` devuelve el error de la última excepcion, sino devuelve 32
+
+#### stdlib
+Las funciones implementadas son:
+* `int atoi(char * str)` convierte un caracter ASCII a un entero
+* `int intToString(unsigned long long num, char * buffer)` convierte un entero a un string
+* `int strlen(char *str)` devuelve el largo del string
+* `int strcmp(char * str1, char * str2)` devuelve 0 si los strings son iguales, sino distinto a 0 si son distintos
+* `int intToBase(unsigned long long num, int base, char*buffer)` convierte un entero a una base dada
+* `int iabs(int num)` devuelve el valor absoluto del entero
+* `char * strcpy(char * dest, char * src)` copia src en dest
+* `int atohex(char * str)` convierte un hex ASCII a entero
+* `char toUpper(char letter)` pasa el string a mayúscula
+* `char toLower(char letter)` pasa el string a minúscula
+
+#### stdGraphics
+Las funciones implementadas son:
+* `void drawString(int x, int y, char * buffer, int dim, uint64_t fontColor, uint64_t backgroundColor, int fontSize, int alphaBackground);` dibuja el string desde la posición (x, y). Si alphaBackground es distinto a 0 entonces no dibuja el fondo.
+* `void clearScreen(uint64_t color)` limpia la pantalla con el color dado
+* `void drawRect(int xi, int yi, int width, int height, uint64_t color)` dibuja un rectángulo desde las coordenadas (xi, yi) con la altura, el ancho y el color dado.
+
+#### time
+Las funciones implementadas son:
+* `int getSeconds()` devuelve los segundos del tiempo actual
+* `int getMinutes()` devuelve los minutos del tiempo actual
+* `int getHours()` devuelve la hora del tiempo actual
+* `int getDays()` devuelve el día de la fecha actual
+* `int getMonth()` devuelve el mes de la fecha actual
+* `int getYear()` devuelve el año de la fecha actual

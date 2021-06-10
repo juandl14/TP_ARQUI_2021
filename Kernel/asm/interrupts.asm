@@ -8,6 +8,8 @@ GLOBAL _irq80Handler
 GLOBAL _exception00Handler
 GLOBAL _exception06Handler
 GLOBAL saveInitialConditions
+GLOBAL _sendEOI
+GLOBAL _hlt
 
 EXTERN irqDispatcher
 EXTERN exceptionDispatcher
@@ -59,8 +61,8 @@ SECTION .text
 	call irqDispatcher
 
 	; signal pic EOI (End of Interrupt)
-	mov al, 20h
-	out 20h, al
+	; mov al, 20h
+	; out 20h, al
 
 	popState
 	iretq
@@ -95,6 +97,7 @@ picMasterMask:
     mov rbp, rsp
     mov ax, di
     out	21h,al
+		mov rsp, rbp
     pop rbp
     retn
 
@@ -103,6 +106,7 @@ picSlaveMask:
     mov rbp, rsp
     mov ax, di  ; ax = mascara de 16 bits
     out	0A1h,al
+		mov rsp, rbp
     pop rbp
     retn
 
@@ -129,6 +133,19 @@ saveInitialConditions:
 	mov rax, rdi
 	mov [initialConditions + 8], rax
 	ret
+
+_hlt:
+	hlt
+	ret
+
+_sendEOI:
+	push rax
+	mov al, 20h
+	out 20h, al
+	pop rax
+	ret
+
+
 
 SECTION .bss
 initialConditions resb 16 ; rsp: primeros 8 bits - rip: segundos 8 bits
